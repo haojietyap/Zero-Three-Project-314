@@ -1,11 +1,11 @@
 <?php
 session_start();
-require_once __DIR__ . '/../../Controllers/profiles/Manager/CreateManagerProfileController.php';
+require_once __DIR__ . '/../../Controllers/profiles/PM/CreateManagerProfileController.php';
 
 $userId = $_GET['id'] ?? null;
 
 $message = '';
-$createProfileController = new CreateManagerProfileController();
+$createProfileController = new CreatePlatformManagerProfileController();
 
 if ($userId && $_SERVER['REQUEST_METHOD'] === 'POST') {
     $phone = $_POST['phone'];
@@ -160,12 +160,12 @@ if ($createProfileController->create($userId, $phone, $address)) {
 <body>
 
 <nav>
-    <h1>Create Manager Profile</h1>
+    <h1>Create Platform Manager Profile</h1>
     <a class="logout-link" href="../../logout.php"><i class="fas fa-sign-out-alt"></i> Logout</a>
 </nav>
 
 <div class="container">
-    <h2>Manager Information</h2>
+    <h2>Platform Manager Information</h2>
 
     <?php if (!empty($message)): ?>
         <p class="message"><?= htmlspecialchars($message) ?></p>
@@ -185,4 +185,5 @@ if ($createProfileController->create($userId, $phone, $address)) {
 </div>
 
 </body>
+
 </html>
