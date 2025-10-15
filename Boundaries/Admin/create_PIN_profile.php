@@ -1,19 +1,19 @@
 <?php
 session_start();
-require_once __DIR__ . '/../../Controllers/profiles/Homeowner/CreateHomeownerProfileController.php';
+require_once __DIR__ . '/../../Controllers/profiles/PIN/CreatePINProfileController.php';
 
 $userId = $_GET['id'] ?? null;
 $message = '';
-$createHomeownerProfileController = new CreateHomeownerProfileController();
+$createPINProfileController = new CreatePINProfileController();
 
 if ($userId && $_SERVER['REQUEST_METHOD'] === 'POST') {
     $phone = $_POST['phone'];
     $address = $_POST['address'];
-    $preferredCleaningTime = $_POST['preferred_cleaning_time'];
-    $cleaningFrequency = $_POST['cleaning_frequency'];
+    $preferredConsultationTime = $_POST['preferred_consultation_time'];
+    $ConsultationFrequency = $_POST['consultation_frequency'];
     $languagePreference = $_POST['language_preference'];
 
-    if ($createHomeownerProfileController->createProfile($userId, $phone, $address, $preferredCleaningTime, $cleaningFrequency, $languagePreference)) {
+    if ($createPINProfileController->createProfile($userId, $phone, $address, $preferredConsultationTime, $ConsultationFrequency, $languagePreference)) {
         $message = "Profile created successfully.";
     } else {
         $message = "Profile already exists or failed.";
@@ -27,7 +27,7 @@ if ($userId && $_SERVER['REQUEST_METHOD'] === 'POST') {
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Create Homeowner Profile</title>
+    <title>Create PIN Profile</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -164,12 +164,12 @@ if ($userId && $_SERVER['REQUEST_METHOD'] === 'POST') {
 <body>
 
 <nav>
-    <h1>Create Homeowner Profile</h1>
+    <h1>Create PIN Profile</h1>
     <a class="logout-link" href="../../logout.php"><i class="fas fa-sign-out-alt"></i> Logout</a>
 </nav>
 
 <div class="container">
-    <h2>Homeowner Information</h2>
+    <h2>PIN Information</h2>
 
     <?php if (!empty($message)): ?>
         <p class="message"><?= htmlspecialchars($message) ?></p>
@@ -182,16 +182,16 @@ if ($userId && $_SERVER['REQUEST_METHOD'] === 'POST') {
         <label>Address:</label>
         <textarea name="address" rows="3" required></textarea>
 
-        <label>Preferred Cleaning Time:</label>
-        <select name="preferred_cleaning_time" required>
+        <label>Preferred Consultation Time:</label>
+        <select name="preferred_consultation_time" required>
             <option value="">--Select Time--</option>
             <option value="Morning">Morning</option>
             <option value="Afternoon">Afternoon</option>
             <option value="Evening">Evening</option>
         </select>
 
-        <label>Cleaning Frequency:</label>
-        <select name="cleaning_frequency" required>
+        <label>Consultation Frequency:</label>
+        <select name="Consultation_frequency" required>
             <option value="">--Select Frequency--</option>
             <option value="Weekly">Weekly</option>
             <option value="Biweekly">Biweekly</option>
