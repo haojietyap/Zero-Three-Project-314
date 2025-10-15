@@ -172,11 +172,8 @@ if ($createProfileController->create($userId, $phone, $address)) {
     <?php endif; ?>
 		
 	<form method="POST">
-        <label>Name:</label>
-        <input type="text" name="name" required>
-
-		<label>Email:</label>
-        <input type="text" name="email" required>
+		<label>Phone:</label>
+        <input type="text" name="phone" required>
 
         <label>Address:</label>
         <textarea name="address" rows="3" required></textarea>
@@ -190,3 +187,4 @@ if ($createProfileController->create($userId, $phone, $address)) {
 </body>
 
 </html>
+
