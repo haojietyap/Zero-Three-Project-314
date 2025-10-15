@@ -3,9 +3,9 @@ session_start();
 require_once __DIR__ . '/../../Controllers/profiles/GetUserProfilesController.php';
 require_once __DIR__ . '/../../Controllers/profiles/SearchUsersProfileController.php';
 require_once __DIR__ . '/../../Controllers/profiles/Admin/CheckAdminProfileStatusController.php';
-require_once __DIR__ . '/../../Controllers/Profiles/Homeowner/CheckHomeownerProfileStatusController.php';
-require_once __DIR__ . '/../../Controllers/Profiles/Cleaner/CheckCleanerProfileStatusController.php';
-require_once __DIR__ . '/../../Controllers/profiles/Manager/CheckManagerProfileStatusController.php';
+require_once __DIR__ . '/../../Controllers/Profiles/PIN/CheckPINProfileStatusController.php';
+require_once __DIR__ . '/../../Controllers/Profiles/CSR/CheckCSRProfileStatusController.php';
+require_once __DIR__ . '/../../Controllers/profiles/PlatformManager/CheckPlatformManagerProfileStatusController.php';
 
 if (!isset($_SESSION['user']) || $_SESSION['user']['role'] !== 'admin') {
     header("Location: login.php");
@@ -16,9 +16,9 @@ $searchUsersProfileController = new SearchUsersProfileController();
 $getUserProfilesController = new GetUserProfilesController();
 
 $checkAdminStatusController = new CheckAdminProfileStatusController();
-$checkHomeownerStatusController = new CheckHomeownerProfileStatusController();
-$checkCleanerStatusController = new CheckCleanerProfileStatusController();
-$checkManagerStatusController = new CheckManagerProfileStatusController();
+$checkPINStatusController = new CheckPINProfileStatusController();
+$checkCSRStatusController = new CheckCSRProfileStatusController();
+$checkPlatformManagerStatusController = new CheckPlatformManagerProfileStatusController();
 
 
 $keyword = $_GET['search'] ?? '';
@@ -238,19 +238,19 @@ $users = $keyword
 		$base = 'admin';
 
 	}
-	elseif ($role === 'manager') {
-		$status = $checkManagerStatusController->getProfileStatus($userId);
-		$base = 'manager';
+	elseif ($role === 'platformmanager') {
+		$status = $checkPlatformManagerStatusController->getProfileStatus($userId);
+		$base = 'platformmanager';
 
 	}
-	elseif ($role === 'homeowner') {
-		$status = $checkHomeownerStatusController->getProfileStatus($userId);
-		$base = 'homeowner';
+	elseif ($role === 'PIN') {
+		$status = $checkPINStatusController->getProfileStatus($userId);
+		$base = 'PIN';
 
 	}
-	elseif ($role === 'cleaner') {
-		$status = $checkCleanerStatusController->getProfileStatus($userId);
-		$base = 'cleaner';
+	elseif ($role === 'CRM') {
+		$status = $checkCRMStatusController->getProfileStatus($userId);
+		$base = 'CRM';
 	}
 
 ?>
@@ -291,5 +291,6 @@ $users = $keyword
 </div>
 </body>
 </html>
+
 
 
