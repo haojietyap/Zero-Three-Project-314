@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once __DIR__ . '/../../Controllers/Profiles/Cleaner/CreateCSRProfileController.php';
+require_once __DIR__ . '/../../Controllers/Profiles/CSR/CreateCSRProfileController.php';
 require_once __DIR__ . '/../../Controllers/Service Category/GetServiceCategoriesController.php';
 
 $userId = $_GET['id'] ?? null;
@@ -8,7 +8,7 @@ $userId = $_GET['id'] ?? null;
 $getServiceCategoriesController = new GetServiceCategoriesController();
 $categories = $getServiceCategoriesController->getAll();
 
-$createCleanerProfileController = new CreateCleanerProfileController();
+$createCSRProfileController = new CreateCSRProfileController();
 
 $message = '';
 $result = '';
@@ -16,23 +16,23 @@ $result = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $phone = $_POST['phone'] ?? '';
     $address = $_POST['address'] ?? '';
+	$email = $_POST['email'] ?? '';
     $experience = $_POST['experience'] ?? '';
-    $rating = $_POST['rating'] ?? '';
-    $preferredCleaningTime = $_POST['preferred_cleaning_time'] ?? '';
-    $cleaningFrequency = $_POST['cleaning_frequency'] ?? '';
-    $languagePreference = $_POST['language_preference'] ?? '';
-    $preferredCategoryId = $_POST['expertise'] ?? '';
+    $preferred_working_time = $_POST['preferred_working_time'] ?? '';
+    $working_frequency = $_POST['working_frequency'] ?? '';
+    $language_preference = $_POST['language_preference'] ?? '';
+    $rating = $_POST['expertise'] ?? '';
 
-    $result = $createCleanerProfileController->createProfile(
-        $userId, $phone, $address, $experience,
-        $preferredCleaningTime, $cleaningFrequency,
-        $languagePreference, $preferredCategoryId, $rating
+    $result = $createCSRProfileController->createProfile(
+        $userId, $phone, $address,$email, $experience,
+        $preferred_working_time, $working_frequency,
+        $language_preference, $rating
     );
 
     if ($result === 'exists') {
-        $message = "Cleaner profile already exists.";
+        $message = "CSR profile already exists.";
     } elseif ($result === 'success') {
-        $message = "Cleaner profile created successfully.";
+        $message = "CSR profile created successfully.";
     } else {
         $message = "An error occurred while creating the profile.";
     }
@@ -43,7 +43,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Create Cleaner Profile</title>
+    <title>Create CSR Profile</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -138,7 +138,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <body>
 
 <nav>
-    <h1>Create Cleaner Profile</h1>
+    <h1>Create CSR Profile</h1>
     <a class="reset-link" href="../logout.php">Logout</a>
 </nav>
 
@@ -159,30 +159,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <label>Address:</label>
         <input type="text" name="address" required>
 
+		<label>Email:</label>
+        <input type="text" name="email" required>
+
         <label>Experience:</label>
         <textarea name="experience" rows="3" required></textarea>
 
         <label>Rating:</label>
         <input type="text" name="rating" required>
 
-        <label>Expertise:</label>
-        <select name="expertise" required>
-            <option value="">--Select a Category--</option>
-            <?php foreach ($categories as $cat): ?>
-                <option value="<?= $cat['category_id'] ?>"><?= htmlspecialchars($cat['name']) ?></option>
-            <?php endforeach; ?>
-        </select>
 
-        <label>Preferred Cleaning Time:</label>
-        <select name="preferred_cleaning_time" required>
+        <label>Preferred Working Time:</label>
+        <select name="preferred_working_time" required>
             <option value="">--Select Time--</option>
             <option value="morning">Morning</option>
             <option value="afternoon">Afternoon</option>
             <option value="evening">Evening</option>
         </select>
 
-        <label>Cleaning Frequency:</label>
-        <select name="cleaning_frequency" required>
+        <label>Working Frequency:</label>
+        <select name="working_frequency" required>
             <option value="">--Select Frequency--</option>
             <option value="weekly">Weekly</option>
             <option value="biweekly">Biweekly</option>
@@ -206,4 +202,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 </body>
 </html>
+
 
