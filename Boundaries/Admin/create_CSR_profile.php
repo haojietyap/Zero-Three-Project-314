@@ -16,17 +16,16 @@ $result = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $phone = $_POST['phone'] ?? '';
     $address = $_POST['address'] ?? '';
-	$email = $_POST['email'] ?? '';
     $experience = $_POST['experience'] ?? '';
     $preferred_working_time = $_POST['preferred_working_time'] ?? '';
     $working_frequency = $_POST['working_frequency'] ?? '';
     $language_preference = $_POST['language_preference'] ?? '';
-    $rating = $_POST['expertise'] ?? '';
+    $preferredCategoryId = $_POST['expertise'] ?? '';
 
     $result = $createCSRProfileController->createProfile(
-        $userId, $phone, $address,$email, $experience,
+        $userId, $phone, $address, $experience,
         $preferred_working_time, $working_frequency,
-        $language_preference, $rating
+        $language_preference,$preferredCategoryId, $rating
     );
 
     if ($result === 'exists') {
@@ -143,7 +142,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </nav>
 
 <div class="container">
-    <h2>Cleaner Information</h2>
+    <h2>CSR Information</h2>
 
     <?php if ($message): ?>
         <p class="message <?= $result === 'success' ? 'success' : 'error' ?>">
@@ -159,15 +158,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <label>Address:</label>
         <input type="text" name="address" required>
 
-		<label>Email:</label>
-        <input type="text" name="email" required>
-
         <label>Experience:</label>
         <textarea name="experience" rows="3" required></textarea>
 
         <label>Rating:</label>
         <input type="text" name="rating" required>
-
+ 
+		<label>Expertise:</label>
+        <select name="expertise" required>
+            <option value="">--Select a Category--</option>
+            <?php foreach ($categories as $cat): ?>
+                <option value="<?= $cat['category_id'] ?>"><?= htmlspecialchars($cat['name']) ?></option>
+            <?php endforeach; ?>
+        </select>
 
         <label>Preferred Working Time:</label>
         <select name="preferred_working_time" required>
@@ -202,5 +205,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 </body>
 </html>
+
 
 
