@@ -23,13 +23,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $address = $_POST['address'];
     $experience = $_POST['experience'];
 	$rating = $_POST['rating'] ?? '';
-    $preferredWorkingTime = $_POST['preferred_working_time'];
-    $workingFrequency = $_POST['working_frequency'];
+    $preferredConsultationTime = $_POST['preferred_consultation_time'];
+    $consultationFrequency = $_POST['consultation_frequency'];
     $languagePreference = $_POST['language_preference'];
     $expertise = $_POST['expertise'];
    
 
-    if ($updateCSRProfileController->updateProfile($userId, $phone, $address, $experience, $preferredWorkingTime, $workingFrequency, $languagePreference, $expertise, $rating)) {
+    if ($updateCSRProfileController->updateProfile($userId, $phone, $address, $experience, $preferredConsultationTime, $consultationFrequency, $languagePreference, $expertise, $rating)) {
         $message = "Profile updated successfully.";
         $profile = $updateCSRProfileController->getCSRProfileByUserId($userId);
     } else {
@@ -222,16 +222,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <?php endforeach; ?>
         </select>
 
-        <label>Preferred Working Time:</label>
-        <select name="preferred_working_time" required>
+        <label>Preferred Consultation Time:</label>
+        <select name="preferred_consultation_time" required>
             <option value="">Select Preferred Time</option>
             <option value="morning" <?= $profile['preferred_working_time'] === 'morning' ? 'selected' : '' ?>>Morning</option>
             <option value="afternoon" <?= $profile['preferred_working_time'] === 'afternoon' ? 'selected' : '' ?>>Afternoon</option>
             <option value="evening" <?= $profile['preferred_working_time'] === 'evening' ? 'selected' : '' ?>>Evening</option>
         </select>
 
-        <label>Working Frequency:</label>
-        <select name="working_frequency" required>
+        <label>Consultation Frequency:</label>
+        <select name="consultation_frequency" required>
             <option value="">Select Frequency</option>
             <option value="weekly" <?= $profile['working_frequency'] === 'weekly' ? 'selected' : '' ?>>Weekly</option>
             <option value="biweekly" <?= $profile['working_frequency'] === 'biweekly' ? 'selected' : '' ?>>Biweekly</option>
@@ -256,4 +256,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 </body>
 </html>
+
 
