@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once __DIR__ . '/../../Controllers/Profiles/Cleaner/UpdateCleanerProfileController.php';
+require_once __DIR__ . '/../../Controllers/Profiles/CSR/UpdateCSRProfileController.php';
 require_once __DIR__ . '/../../Controllers/Service Category/GetServiceCategoriesController.php';
 
 if (!isset($_SESSION['user']) || $_SESSION['user']['role'] !== 'admin') {
@@ -10,8 +10,8 @@ if (!isset($_SESSION['user']) || $_SESSION['user']['role'] !== 'admin') {
 
 $userId = (int)$_GET['id'];
 
-$updateCleanerProfileController = new UpdateCleanerProfileController();
-$profile = $updateCleanerProfileController->getCleanerProfileByUserId($userId);
+$updateCSRProfileController = new UpdateCSRProfileController();
+$profile = $updateCSRProfileController->getCSRProfileByUserId($userId);
 
 $getServiceCategoriesController = new GetServiceCategoriesController();
 $categories = $getServiceCategoriesController->getAll();
@@ -23,15 +23,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $address = $_POST['address'];
     $experience = $_POST['experience'];
 	$rating = $_POST['rating'] ?? '';
-    $preferredCleaningTime = $_POST['preferred_cleaning_time'];
-    $cleaningFrequency = $_POST['cleaning_frequency'];
+    $preferredWorkingTime = $_POST['preferred_working_time'];
+    $workingFrequency = $_POST['working_frequency'];
     $languagePreference = $_POST['language_preference'];
     $expertise = $_POST['expertise'];
    
 
-    if ($updateCleanerProfileController->updateProfile($userId, $phone, $address, $experience, $preferredCleaningTime, $cleaningFrequency, $languagePreference, $expertise, $rating)) {
+    if ($updateCSRProfileController->updateProfile($userId, $phone, $address, $experience, $preferredWorkingTime, $workingFrequency, $languagePreference, $expertise, $rating)) {
         $message = "Profile updated successfully.";
-        $profile = $updateCleanerProfileController->getCleanerProfileByUserId($userId);
+        $profile = $updateCSRProfileController->getCSRProfileByUserId($userId);
     } else {
         $message = "Failed to update profile.";
     }
@@ -42,7 +42,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Update Cleaner Profile</title>
+    <title>Update CSR Profile</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -185,12 +185,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <body>
 
 <nav>
-    <h1>Update Cleaner Profile</h1>
+    <h1>Update CSR Profile</h1>
     <a class="logout-link" href="../../logout.php"><i class="fas fa-sign-out-alt"></i> Logout</a>
 </nav>
 
 <div class="container">
-    <h2>Edit Cleaner Details</h2>
+    <h2>Edit CSR Details</h2>
 
     <?php if (!empty($message)): ?>
         <div class="message <?= strpos($message, 'success') !== false ? 'success' : 'error' ?>">
@@ -222,20 +222,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <?php endforeach; ?>
         </select>
 
-        <label>Preferred Cleaning Time:</label>
-        <select name="preferred_cleaning_time" required>
+        <label>Preferred Working Time:</label>
+        <select name="preferred_working_time" required>
             <option value="">Select Preferred Time</option>
-            <option value="morning" <?= $profile['preferred_cleaning_time'] === 'morning' ? 'selected' : '' ?>>Morning</option>
-            <option value="afternoon" <?= $profile['preferred_cleaning_time'] === 'afternoon' ? 'selected' : '' ?>>Afternoon</option>
-            <option value="evening" <?= $profile['preferred_cleaning_time'] === 'evening' ? 'selected' : '' ?>>Evening</option>
+            <option value="morning" <?= $profile['preferred_working_time'] === 'morning' ? 'selected' : '' ?>>Morning</option>
+            <option value="afternoon" <?= $profile['preferred_working_time'] === 'afternoon' ? 'selected' : '' ?>>Afternoon</option>
+            <option value="evening" <?= $profile['preferred_working_time'] === 'evening' ? 'selected' : '' ?>>Evening</option>
         </select>
 
-        <label>Cleaning Frequency:</label>
-        <select name="cleaning_frequency" required>
+        <label>Working Frequency:</label>
+        <select name="working_frequency" required>
             <option value="">Select Frequency</option>
-            <option value="weekly" <?= $profile['cleaning_frequency'] === 'weekly' ? 'selected' : '' ?>>Weekly</option>
-            <option value="biweekly" <?= $profile['cleaning_frequency'] === 'biweekly' ? 'selected' : '' ?>>Biweekly</option>
-            <option value="monthly" <?= $profile['cleaning_frequency'] === 'monthly' ? 'selected' : '' ?>>Monthly</option>
+            <option value="weekly" <?= $profile['working_frequency'] === 'weekly' ? 'selected' : '' ?>>Weekly</option>
+            <option value="biweekly" <?= $profile['working_frequency'] === 'biweekly' ? 'selected' : '' ?>>Biweekly</option>
+            <option value="monthly" <?= $profile['working_frequency'] === 'monthly' ? 'selected' : '' ?>>Monthly</option>
         </select>
 
         <label>Language Preference:</label>
@@ -256,3 +256,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 </body>
 </html>
+
