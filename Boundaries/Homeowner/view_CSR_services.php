@@ -1,17 +1,17 @@
 <?php
 session_start();
-require_once __DIR__ . '/../../Controllers/Homeowner/ViewCleaningServiceController.php';
-require_once __DIR__ . '/../../Controllers/Homeowner/IncrementServiceViewCountController.php';
+require_once __DIR__ . '/../../Controllers/PIN/ViewConsultationServiceController.php';
+require_once __DIR__ . '/../../Controllers/PIN/IncrementServiceViewCountController.php';
 require_once __DIR__ . '/../../Controllers/Shortlists/AddShortlistController.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['job_id'])) {
     $controller = new AddShortlistController();
 	$controller->add($_SESSION['user']['id'], $_POST['job_id']);
-    header("Location: view_cleaner_services.php?job_id={$_POST['job_id']}&status=shortlisted");
+    header("Location: view_consultation_services.php?job_id={$_POST['job_id']}&status=shortlisted");
     exit;
 }
 
-if (!isset($_SESSION['user']) || $_SESSION['user']['role'] !== 'homeowner') {
+if (!isset($_SESSION['user']) || $_SESSION['user']['role'] !== 'PIN') {
     header("Location: ../../login.php");
     exit;
 }
@@ -27,7 +27,7 @@ if ($jobId) {
   exit;
 }
 
-$serviceController = new ViewCleaningServiceController();
+$serviceController = new ViewConsultationServiceController();
 $service = $serviceController->getServiceById($jobId);
 
 if (!$service) {
@@ -192,7 +192,7 @@ if (!$service) {
 <body>
 
 <div class="container">
-    <h2>🧹 Service Detail</h2>
+    <h2> Consultation Detail</h2>
 
     <?php if ($service):?>
         <table>
@@ -215,7 +215,7 @@ if (!$service) {
     <?php else: ?>
         <form method="POST" action="confirm_job.php" style="margin-bottom: 8px;">
             <input type="hidden" name="job_id" value="<?= $service['job_id'] ?>">
-            <input type="hidden" name="cleaner_id" value="<?= $service['cleaner_id'] ?>">
+            <input type="hidden" name="CSR_id" value="<?= $service['CSR_id'] ?>">
             <button type="submit" class="confirm-btn">Confirm Booking</button>
         </form>
 
@@ -235,4 +235,5 @@ if (!$service) {
     <a href="view_favorites.php" class="back-link">Back to Favorite List</a>
 </div>
 </body>
+
 </html>
