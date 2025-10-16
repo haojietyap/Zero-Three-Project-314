@@ -1,15 +1,15 @@
 <?php
 session_start();
 require_once __DIR__ . '/../../Controllers/ConfirmedJobs/ViewConfirmedJobsController.php';
-require_once __DIR__ . '/../../Controllers/ConfirmedJobs/FilterConfirmedJobsByHomeownerController.php';
+require_once __DIR__ . '/../../Controllers/ConfirmedJobs/FilterConfirmedJobsByPINController.php';
 require_once __DIR__ . '/../../Controllers/Service Category/ViewServiceCategoryController.php';
 
-if (!isset($_SESSION['user']) || $_SESSION['user']['role'] !== 'homeowner') {
+if (!isset($_SESSION['user']) || $_SESSION['user']['role'] !== 'PIN') {
     header("Location: ../../login.php");
     exit;
 }
 
-$homeownerId = $_SESSION['user']['id'];
+$PIN = $_SESSION['user']['id'];
 
 $categoryController = new ViewServiceCategoryController();
 $categories = $categoryController->getAllCategories();
@@ -19,11 +19,11 @@ $startDate  = isset($_GET['start_date']) ? $_GET['start_date'] : null;
 $endDate    = isset($_GET['end_date']) ? $_GET['end_date'] : null;
 
 if ($categoryId || $startDate || $endDate) {
-    $controller = new FilterConfirmedJobsByHomeownerController();
-    $confirmedJobs = $controller->filter($homeownerId, $categoryId, $startDate, $endDate);
+    $controller = new FilterConfirmedJobsByPINController();
+    $confirmedJobs = $controller->filter($PINId, $categoryId, $startDate, $endDate);
 } else {
     $controller = new ViewConfirmedJobsController();
-    $confirmedJobs = $controller->getByHomeowner($homeownerId);
+    $confirmedJobs = $controller->getByPIN($PINId);
 }
 ?>
 
@@ -180,14 +180,14 @@ if ($categoryId || $startDate || $endDate) {
         <input type="date" name="end_date" value="<?= htmlspecialchars($endDate) ?>">
 
         <button type="submit">Search</button>
-        <a href="view_confirmed_jobs_homeowner.php" class="reset-link">Reset</a>
+        <a href="view_confirmed_jobs_PIN.php" class="reset-link">Reset</a>
     </form>
 
     <table>
         <tr>
             <th>Service Title</th>
             <th>Service Category</th>
-            <th>Cleaner Name</th>
+            <th>CSR Name</th>
             <th>Status</th>
             <th>Matched Date</th>
             <th>Completion Date</th>
@@ -211,7 +211,8 @@ if ($categoryId || $startDate || $endDate) {
         <?php endif; ?>
     </table>
 
-    <a href="homeowner_dashboard.php" class="back-link">Back to Dashboard</a>
+    <a href="PIN_dashboard.php" class="back-link">Back to Dashboard</a>
 </div>
 </body>
 </html>
+
