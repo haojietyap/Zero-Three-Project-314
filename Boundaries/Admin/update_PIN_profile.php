@@ -21,11 +21,11 @@ $message = "";
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $phone = $_POST['phone'];
     $address = $_POST['address'];
-    $preferredCleaningTime = $_POST['preferred_cleaning_time'];
+    $preferredConsultationTime = $_POST['preferred_consultation_time'];
     $consultationFrequency = $_POST['consultation_frequency'];
     $languagePreference = $_POST['language_preference'];
 
-    if ($updateController->updateProfile($userId, $phone, $address, $preferredCleaningTime, $consultationFrequency, $languagePreference)) {
+    if ($updateController->updateProfile($userId, $phone, $address, $preferredConsultationTime, $consultationFrequency, $languagePreference)) {
         $message = "Profile updated successfully.";
       
         $profileData = $viewController->getProfileByUserId($userId);
