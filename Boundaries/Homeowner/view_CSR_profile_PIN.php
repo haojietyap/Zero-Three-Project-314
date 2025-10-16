@@ -1,27 +1,27 @@
 <?php
 session_start();
-require_once __DIR__ . '/../../Controllers/Profiles/Cleaner/ViewCleanerProfileController.php';
-require_once __DIR__ . '/../../Controllers/Homeowner/HomeownerViewCleaningServicesController.php';
+require_once __DIR__ . '/../../Controllers/Profiles/CSR/ViewCSRProfileController.php';
+require_once __DIR__ . '/../../Controllers/PIN/PINViewConsultationServicesController.php';
 require_once __DIR__ . '/../../Controllers/Service Category/ViewServiceCategoryController.php';
 
-if (!isset($_SESSION['user']) || $_SESSION['user']['role'] !== 'homeowner') {
+if (!isset($_SESSION['user']) || $_SESSION['user']['role'] !== 'PIN') {
     header("Location: ../../login.php");
     exit;
 }
 $userId = $_GET['id'] ?? null;
-$cleanerId = $_GET['id'] ?? null;
+$CSRId = $_GET['id'] ?? null;
 
-if (!$cleanerId) {
-    echo "Cleaner ID is required.";
+if (!$CSRId) {
+    echo "CSR ID is required.";
     exit;
 }
 
-$profileController = new ViewCleanerProfileController();
-$serviceController = new HomeownerViewCleaningServicesController();
+$profileController = new ViewCSRProfileController();
+$serviceController = new PINViewConsultationServicesController();
 $categoryController = new ViewServiceCategoryController();
 
-$profile = $profileController->getProfile($cleanerId);
-$services = $serviceController->getOfferedServicesByCleaner($cleanerId);
+$profile = $profileController->getProfile($CSRId);
+$services = $serviceController->getOfferedServicesByCSR($CSRId);
 
 $categoryName = '';
 if ($profile && !empty($profile['expertise'])) {
@@ -34,7 +34,7 @@ if ($profile && !empty($profile['expertise'])) {
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>View Cleaner Profile</title>
+    <title>View CSR Profile</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -198,7 +198,7 @@ if ($profile && !empty($profile['expertise'])) {
 </head>
 <body>
 <div class="container">
-        <h2>Cleaner Profile</h2>
+        <h2>CSR Profile</h2>
 		
         <label>Phone:</label>
         <input type="text" value="<?= htmlspecialchars($profile['phone']) ?>" readonly>
@@ -212,11 +212,11 @@ if ($profile && !empty($profile['expertise'])) {
         <label>Expertise:</label>
         <input type="text" value="<?= htmlspecialchars($categoryName) ?>" readonly>
 
-        <label>Preferred Cleaning Time:</label>
-        <input type="text" value="<?= htmlspecialchars($profile['preferred_cleaning_time']) ?>" readonly>
+        <label>Preferred Consultation Time:</label>
+        <input type="text" value="<?= htmlspecialchars($profile['preferred_consultation_time']) ?>" readonly>
 
-        <label>Cleaning Frequency:</label>
-        <input type="text" value="<?= htmlspecialchars($profile['cleaning_frequency']) ?>" readonly>
+        <label>Consultation Frequency:</label>
+        <input type="text" value="<?= htmlspecialchars($profile['consultation_frequency']) ?>" readonly>
 
         <label>Language Preference:</label>
         <input type="text" value="<?= htmlspecialchars($profile['language_preference']) ?>" readonly>
@@ -224,13 +224,13 @@ if ($profile && !empty($profile['expertise'])) {
         <label>Status:</label>
         <input type="text" value="<?= htmlspecialchars($profile['status']) ?>" readonly>
 
-<h3>Services Offered by This Cleaner:</h3>
+<h3>Services Offered by This CSR:</h3>
 <?php if (!empty($services)): ?>
     <ul>
         <?php foreach ($services as $service): ?>
             <li>
                 <?= htmlspecialchars($service['title']) ?>
-                <a href="view_cleaner_services.php?cleaner_id=<?= $cleanerId ?>&job_id=<?= $service['job_id'] ?>" class="view-btn">View Services</a>
+                <a href="view_CSR_services.php?CSR_id=<?= $CSRId ?>&job_id=<?= $service['job_id'] ?>" class="view-btn">View Services</a>
             </li>
         <?php endforeach; ?>
     </ul>
@@ -239,10 +239,11 @@ if ($profile && !empty($profile['expertise'])) {
 <?php endif; ?>
 
 <div class="center-buttons">
-	<a href="view_cleaners.php" class="btn-nav">Back to Cleaner List</a>
+	<a href="view_CSR.php" class="btn-nav">Back to CSR List</a>
     <a href="view_favorites.php" class="btn-nav">Back to Favorite List</a>
 </div>
 
 
 </body>
+
 </html>
