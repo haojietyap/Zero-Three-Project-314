@@ -5,7 +5,7 @@ require_once __DIR__ . '/../../Controllers/profiles/PM/CreateManagerProfileContr
 $userId = $_GET['id'] ?? null;
 
 $message = '';
-$createProfileController = new CreatePlatformManagerProfileController();
+$createProfileController = new CreateManagerProfileController();
 
 if ($userId && $_SERVER['REQUEST_METHOD'] === 'POST') {
     $phone = $_POST['phone'];
@@ -187,3 +187,4 @@ if ($createProfileController->create($userId, $phone, $address)) {
 </body>
 
 </html>
+
