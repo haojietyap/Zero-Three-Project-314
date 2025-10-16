@@ -1,12 +1,12 @@
 <?php
 session_start();
 
-if (!isset($_SESSION['user']) || $_SESSION['user']['role'] !== 'homeowner') {
+if (!isset($_SESSION['user']) || $_SESSION['user']['role'] !== 'PIN') {
     header("Location: login.php");
     exit;
 }
 
-$homeownerEmail = $_SESSION['user']['email'];
+$PINEmail = $_SESSION['user']['email'];
 ?>
 
 <!DOCTYPE html>
@@ -145,19 +145,19 @@ $homeownerEmail = $_SESSION['user']['email'];
 <body>
 
     <nav>
-        <h1>Homeowner Dashboard</h1>
+        <h1>PIN Dashboard</h1>
          <a href="../logout.php" class="logout-link"><i class="fas fa-sign-out-alt"></i> Logout</a>
     </nav>
 
     <div class="container">
-        <h2>Welcome, Homeowner 🏠</h2>
-        <p>You are logged in as: <strong><?= htmlspecialchars($homeownerEmail) ?></strong></p>
+        <h2>Welcome, PIN </h2>
+        <p>You are logged in as: <strong><?= htmlspecialchars($PINEmail) ?></strong></p>
 
    <h3>Menu:</h3>
         <ul>
-			<li><a href="view_cleaners.php"><i class="fas fa-broom"></i> View Cleaners</a></li>
+			<li><a href="view_CSR.php"><i class="fas fa-broom"></i> View CSR</a></li>
             <li><a href="view_favorites.php"><i class="fas fa-heart"></i> View Favorite List</a></li>
-			<li><a href="view_confirmed_jobs_homeowner.php"><i class="fas fa-list-alt"></i> View Confirmed Jobs</a></li>
+			<li><a href="view_confirmed_jobs_PIN.php"><i class="fas fa-list-alt"></i> View Confirmed Jobs</a></li>
            
         </ul>
 
@@ -165,3 +165,4 @@ $homeownerEmail = $_SESSION['user']['email'];
 
 </body>
 </html>
+
