@@ -1,31 +1,31 @@
 <?php
 session_start();
-require_once __DIR__ . '/../../Controllers/Homeowner/ViewCleanerController.php';
-require_once __DIR__ . '/../../Controllers/Homeowner/SearchCleanersController.php';
-require_once __DIR__ . '/../../Controllers/Homeowner/CheckFavoriteStatusController.php';
+require_once __DIR__ . '/../../Controllers/PIN/ViewCSRController.php';
+require_once __DIR__ . '/../../Controllers/PIN/SearchCSRController.php';
+require_once __DIR__ . '/../../Controllers/PIN/CheckFavoriteStatusController.php';
 
-if (!isset($_SESSION['user']) || $_SESSION['user']['role'] !== 'homeowner') {
+if (!isset($_SESSION['user']) || $_SESSION['user']['role'] !== 'PIN') {
     header("Location: /314/Boundaries/login.php");
     exit;
 }
 
-$searchController = new SearchCleanersController();
-$viewController = new ViewCleanersController();
+$searchController = new SearchCSRController();
+$viewController = new ViewCSRController();
 $checkFavoriteController = new CheckFavoriteStatusController();
 
-$homeownerId = $_SESSION['user']['id'];
+$PINId = $_SESSION['user']['id'];
 
 $keyword = $_GET['search'] ?? '';
 $cleaners = !empty($keyword)
     ? $searchController->searchByCategoryOrRating($keyword)
-    : $viewController->getAllActiveCleaners();
+    : $viewController->getAllActiveCSR();
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Browse Cleaners</title>
+    <title>Browse CSR</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
     <style>
         body {
@@ -226,43 +226,44 @@ $cleaners = !empty($keyword)
 </head>
 <body>
 
-<h2>✨ Browse Available Cleaners</h2>
+<h2>✨ Browse Available CSR</h2>
 
 <?php if (isset($_GET['msg']) && $_GET['msg'] === 'added'): ?>
-    <p style="text-align:center; color: #4ade80; font-weight: bold;">Cleaner added to favorites.</p>
+    <p style="text-align:center; color: #4ade80; font-weight: bold;">CSR added to favorites.</p>
 <?php endif; ?>
 
 <div class="search-bar">
     <form method="GET" style="display: flex; gap: 10px;">
         <input type="text" name="search" placeholder="Search by expertise, rating, or location" value="<?= htmlspecialchars($keyword) ?>">
         <button type="submit">Search</button>
-        <a class="reset-link" href="view_cleaners.php">Reset</a>
+        <a class="reset-link" href="view_CSR.php">Reset</a>
     </form>
 </div>
 
-<div class="cleaner-list">
-    <?php foreach ($cleaners as $cleaner): ?>
-        <?php $isFavorited = $checkFavoriteController->isFavorited($homeownerId, $cleaner['user_id']); ?>
-        <div class="cleaner-card">
-            <div class="cleaner-details">
-                <p><strong>Name:</strong> <?= htmlspecialchars($cleaner['name']) ?></p>
-                <p><strong>Location:</strong> <?= htmlspecialchars($cleaner['address']) ?></p>
-                <p><strong>Cleaning Expertise:</strong> <?= htmlspecialchars($cleaner['category_name']) ?></p>
-                <p><strong>Rating:</strong> <?= $cleaner['rating'] ?? '-' ?></p>
+<div class="CSR-list">
+    <?php foreach ($CSR as $CSR): ?>
+        <?php $isFavorited = $checkFavoriteController->isFavorited($PIN, $CSR['user_id']); ?>
+        <div class="CSR-card">
+            <div class="CSR-details">
+                <p><strong>Name:</strong> <?= htmlspecialchars($CSR['name']) ?></p>
+                <p><strong>Location:</strong> <?= htmlspecialchars($CSR['address']) ?></p>
+                <p><strong>Consultation Expertise:</strong> <?= htmlspecialchars($CSR['category_name']) ?></p>
+                <p><strong>Rating:</strong> <?= $CSR['rating'] ?? '-' ?></p>
             </div>
            <div class="actions">
 			<?php if ($isFavorited): ?>
 				<span class="favorited-label">Favorited</span>
 			<?php else: ?>
-				<a class="favorite-btn" href="favorite_cleaner.php?cleaner_id=<?= htmlspecialchars($cleaner['user_id']) ?>">Favorite</a>
+				<a class="favorite-btn" href="favorite_CSR.php?CSR_id=<?= htmlspecialchars($CSR['user_id']) ?>">Favorite</a>
 			<?php endif; ?>
-				<a class="btn view-btn" href="view_cleaner_profile_homeowner.php?id=<?= htmlspecialchars($cleaner['user_id']) ?>">View Profile</a>
+				<a class="btn view-btn" href="view_CSR_profile_PIN.php?id=<?= htmlspecialchars($CSR['user_id']) ?>">View Profile</a>
 			</div>
         </div>
     <?php endforeach; ?>
 </div>
 
-<a href="homeowner_dashboard.php" class="back-link">Back to Dashboard</a>
+<a href="PIN_dashboard.php" class="back-link">Back to Dashboard</a>
 
 </body>
 </html>
+
