@@ -1,19 +1,19 @@
 <?php
 session_start();
 
-if (!isset($_SESSION['user']) || $_SESSION['user']['role'] !== 'cleaner') {
+if (!isset($_SESSION['user']) || $_SESSION['user']['role'] !== 'CSR') {
     header("Location: login.php");
     exit;
 }
 
-$cleanerName = $_SESSION['user']['email'];
+$CSRName = $_SESSION['user']['email'];
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Cleaner Dashboard</title>
+    <title>CSR Dashboard</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -145,22 +145,23 @@ $cleanerName = $_SESSION['user']['email'];
 <body>
 
     <nav>
-        <h1>Cleaner Dashboard</h1>
+        <h1>CSR Dashboard</h1>
         <a class="logout-link" href="../logout.php"><i class="fas fa-sign-out-alt"></i> Logout</a>
     </nav>
 
     <div class="container">
-        <h2>Welcome, Cleaner🧹</h2>
-        <p>You are logged in as: <strong><?= htmlspecialchars($cleanerName) ?></strong></p>
+        <h2>Welcome, CSR</h2>
+        <p>You are logged in as: <strong><?= htmlspecialchars($CSRName) ?></strong></p>
 
         <h3>Menu:</h3>
         <ul class="menu">
             <li><a href="create_service.php"><i class="fas fa-plus-circle"></i> Create Service</a></li>
             <li><a href="view_my_services.php"><i class="fas fa-list-alt"></i> View My Services</a></li>
-			<li><a href="view_confirmed_jobs_cleaner.php"><i class="fa-solid fa-eye"></i> View Confirmed Jobs</a></li>
-			<li><a href="view_completed_stats_cleaner.php"><i class="fas fa-list-alt"></i> View Completed Jobs</a></li>
+			<li><a href="view_confirmed_jobs_CSR.php"><i class="fa-solid fa-eye"></i> View Confirmed Jobs</a></li>
+			<li><a href="view_completed_stats_CSR.php"><i class="fas fa-list-alt"></i> View Completed Jobs</a></li>
         </ul>
     </div>
 
 </body>
+
 </html>
