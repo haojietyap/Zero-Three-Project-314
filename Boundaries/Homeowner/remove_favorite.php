@@ -1,21 +1,22 @@
 <?php
 session_start();
-require_once __DIR__ . '/../../Controllers/Homeowner/RemoveFavoriteController.php';
+require_once __DIR__ . '/../../Controllers/PIN/RemoveFavoriteController.php';
 
-if (!isset($_SESSION['user']) || $_SESSION['user']['role'] !== 'homeowner') {
+if (!isset($_SESSION['user']) || $_SESSION['user']['role'] !== 'PIN') {
     header("Location: ../../login.php");
     exit;
 }
 
-$homeownerId = $_SESSION['user']['id'];
-$cleanerId = $_GET['cleaner_id'] ?? null;
+$PINId = $_SESSION['user']['id'];
+$CSRId = $_GET['CSR_id'] ?? null;
 
-if ($cleanerId) {
+if ($CSRId) {
     $removeFavoriteController = new RemoveFavoriteController();
-    $success = $removeFavoriteController->remove($homeownerId, $cleanerId);
+    $success = $removeFavoriteController->remove($PINId, $CSRId);
     $msg = $success ? 'removed' : 'error';
     header("Location: view_favorites.php?msg=$msg");
     exit;
 } else {
-    echo "Cleaner ID is missing.";
+    echo "CSR ID is missing.";
 }
+
