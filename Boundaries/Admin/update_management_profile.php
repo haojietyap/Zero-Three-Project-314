@@ -1,7 +1,7 @@
 <?php
 session_start();
-require_once __DIR__ . '/../../Controllers/profiles/Manager/UpdateManagerProfileController.php';
-require_once __DIR__ . '/../../Controllers/profiles/Manager/ViewManagerProfileController.php';
+require_once __DIR__ . '/../../Controllers/profiles/Management/UpdateManagementProfileController.php';
+require_once __DIR__ . '/../../Controllers/profiles/Management/ViewManagementProfileController.php';
 
 $userId = $_GET['id'] ?? null;
 $message = '';
@@ -11,8 +11,8 @@ if (!$userId) {
     exit;
 }
 
-$viewController = new ViewManagerProfileController();
-$updateController = new UpdateManagerProfileController();
+$viewController = new ViewManagementProfileController();
+$updateController = new UpdateManagementProfileController();
 
 $profile = $viewController->getProfileByUserId($userId);
 
@@ -209,4 +209,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </div>
 
 </body>
+
 </html>
