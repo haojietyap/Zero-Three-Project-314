@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once __DIR__ . '/../../Controllers/profiles/Manager/ViewManagerProfileController.php';
+require_once __DIR__ . '/../../Controllers/profiles/Management/ViewManagementProfileController.php';
 
 if (!isset($_SESSION['user']) || $_SESSION['user']['role'] !== 'admin') {
     header("Location: ../../login.php");
@@ -15,7 +15,7 @@ if (!$userId) {
     exit;
 }
 
-$viewController = new ViewManagerProfileController();
+$viewController = new ViewManagementProfileController();
 $profile = $viewController->getProfileByUserId($userId);
 ?>
 
@@ -100,7 +100,7 @@ $profile = $viewController->getProfileByUserId($userId);
 
 
 <div class="container">
-    <h2>Manager Profile</h2>
+    <h2>Management Profile</h2>
 
     <?php if ($profile): ?>
         <label>Phone:</label>
@@ -117,6 +117,7 @@ $profile = $viewController->getProfileByUserId($userId);
 
 </body>
 </html>
+
 
 
 
