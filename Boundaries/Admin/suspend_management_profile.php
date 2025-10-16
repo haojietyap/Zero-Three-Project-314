@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once __DIR__ . '/../../Controllers/profiles/Manager/SuspendManagerProfileController.php';
+require_once __DIR__ . '/../../Controllers/profiles/Management/SuspendManagementProfileController.php';
 
 if (!isset($_SESSION['user']) || $_SESSION['user']['role'] !== 'admin') {
     header("Location: ../../login.php");
@@ -14,8 +14,9 @@ if (!$userId) {
     exit;
 }
 
-$suspendController = new SuspendManagerProfileController();
+$suspendController = new SuspendManagementProfileController();
 $suspendController->suspend($userId);
 
 header("Location: manage_profiles.php");
 exit;
+
