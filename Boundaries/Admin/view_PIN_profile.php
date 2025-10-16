@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once __DIR__ . '/../../Controllers/Profiles/Homeowner/ViewHomeownerProfileController.php';
+require_once __DIR__ . '/../../Controllers/Profiles/PIN/ViewPINProfileController.php';
 
 if (!isset($_SESSION['user']) || $_SESSION['user']['role'] !== 'admin') {
     header("Location: ../../login.php");
@@ -14,15 +14,15 @@ if (!isset($_GET['id'])) {
 
 $userId = $_GET['id'];
 
-$viewHomeownerProfileController = new ViewHomeownerProfileController();
-$profile = $viewHomeownerProfileController->getProfileByUserId($userId);
+$viewPINProfileController = new ViewPINProfileController();
+$profile = $viewPINProfileController->getProfileByUserId($userId);
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>View Homeowner Profile</title>
+    <title>View PIN Profile</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -138,12 +138,12 @@ $profile = $viewHomeownerProfileController->getProfileByUserId($userId);
 <body>
 
 <nav>
-    <h1>View Homeowner Profile</h1>
+    <h1>View PIN Profile</h1>
     <a class="logout-link" href="../../logout.php"><i class="fas fa-sign-out-alt"></i> Logout</a>
 </nav>
 
 <div class="container">
-    <h2>Homeowner Profile</h2>
+    <h2>PIN Profile</h2>
 
     <?php if ($profile): ?>
 
@@ -156,11 +156,11 @@ $profile = $viewHomeownerProfileController->getProfileByUserId($userId);
         <label>Status:</label>
         <input type="text" value="<?= htmlspecialchars($profile['status']) ?>" readonly>
 
-        <label>Preferred Cleaning Time:</label>
-        <input type="text" value="<?= htmlspecialchars($profile['preferred_cleaning_time']) ?>" readonly>
+        <label>Preferred Consultation Time:</label>
+        <input type="text" value="<?= htmlspecialchars($profile['preferred_consultation_time']) ?>" readonly>
 
-        <label>Cleaning Frequency:</label>
-        <input type="text" value="<?= htmlspecialchars($profile['cleaning_frequency']) ?>" readonly>
+        <label>Consultation Frequency:</label>
+        <input type="text" value="<?= htmlspecialchars($profile['consultation_frequency']) ?>" readonly>
 
         <label>Language Preference:</label>
         <input type="text" value="<?= htmlspecialchars($profile['language_preference']) ?>" readonly>
