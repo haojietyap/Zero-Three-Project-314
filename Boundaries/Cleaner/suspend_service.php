@@ -1,8 +1,8 @@
 <?php
 session_start();
-require_once __DIR__ . '/../../Controllers/Cleaning Services/SuspendCleaningServiceController.php';
+require_once __DIR__ . '/../../Controllers/Consultation Services/SuspendConsultationServiceController.php';
 
-if (!isset($_SESSION['user']) || $_SESSION['user']['role'] !== 'cleaner') {
+if (!isset($_SESSION['user']) || $_SESSION['user']['role'] !== 'CSR') {
     header("Location: login.php");
     exit;
 }
@@ -13,9 +13,10 @@ if (!isset($_GET['id'])) {
 }
 
 $jobId = $_GET['id'];
-$SuspendController = new SuspendCleaningServiceController();
+$SuspendController = new SuspendConsultationServiceController();
 $success = $SuspendController->suspend($jobId);
 
 header("Location: view_my_services.php");
 exit;
 ?>
+
