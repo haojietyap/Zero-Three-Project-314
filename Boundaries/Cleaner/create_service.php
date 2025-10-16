@@ -1,15 +1,15 @@
 <?php
 session_start();
-require_once __DIR__ . '/../../Controllers/Cleaning Services/CreateCleaningServiceController.php';
+require_once __DIR__ . '/../../Controllers/Consultation Services/CreateConsultationServiceController.php';
 require_once __DIR__ . '/../../Controllers/Service Category/ViewServiceCategoryController.php';
 
 
-if (!isset($_SESSION['user']) || $_SESSION['user']['role'] !== 'cleaner') {
+if (!isset($_SESSION['user']) || $_SESSION['user']['role'] !== 'CSR') {
     header("Location: login.php");
     exit;
 }
 
-$createCleaningServiceController = new CreateCleaningServiceController();
+$createConsultationServiceController = new CreateConsultationServiceController();
 $viewServiceCategoryController = new ViewServiceCategoryController();
 $categories = $viewServiceCategoryController->getAllCategories();
 
@@ -20,10 +20,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $title = $_POST['title'];
     $description = $_POST['description'];
     $categoryId = $_POST['category_id']; 
-    $cleanerId = $_SESSION['user']['id'];
+    $CSRId = $_SESSION['user']['id'];
 	$price = $_POST['price'];
 
-    if ($createCleaningServiceController->createService($cleanerId, $title, $description, $categoryId, $price)) {
+    if ($createConsultationServiceController->createService($CSRId, $title, $description, $categoryId, $price)) {
         $message = "Service created successfully.";
     } else {
         $message = "Error creating service.";
@@ -36,7 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Create Cleaning Service</title>
+    <title>Create Consultation Service</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
     <style>
         * {
@@ -169,7 +169,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </nav>
 
     <div class="container">
-        <h2>Create Cleaning Service</h2>
+        <h2>Create Consultation Service</h2>
 
         <?php if ($message): ?>
             <div class="message" style="color:<?= strpos($message, 'successfully') !== false ? 'green' : 'red' ?>">
@@ -203,3 +203,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 </body>
 </html>
+
