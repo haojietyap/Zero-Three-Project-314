@@ -1,7 +1,7 @@
 <?php
 session_start();
-require_once __DIR__ . '/../../Controllers/Profiles/Homeowner/UpdateHomeownerProfileController.php';
-require_once __DIR__ . '/../../Controllers/Profiles/Homeowner/ViewHomeownerProfileController.php';
+require_once __DIR__ . '/../../Controllers/Profiles/PIN/UpdatePINProfileController.php';
+require_once __DIR__ . '/../../Controllers/Profiles/PIN/ViewPINProfileController.php';
 
 
 if (!isset($_SESSION['user']) || $_SESSION['user']['role'] !== 'admin') {
@@ -11,8 +11,8 @@ if (!isset($_SESSION['user']) || $_SESSION['user']['role'] !== 'admin') {
 
 $userId = $_GET['id'];
 
-$viewController = new ViewHomeownerProfileController();
-$updateController = new UpdateHomeownerProfileController();
+$viewController = new ViewPINProfileController();
+$updateController = new UpdatePINProfileController();
 
 $profile = $viewController->getProfileByUserId($userId);
 
@@ -22,10 +22,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $phone = $_POST['phone'];
     $address = $_POST['address'];
     $preferredCleaningTime = $_POST['preferred_cleaning_time'];
-    $cleaningFrequency = $_POST['cleaning_frequency'];
+    $consultationFrequency = $_POST['consultation_frequency'];
     $languagePreference = $_POST['language_preference'];
 
-    if ($updateController->updateProfile($userId, $phone, $address, $preferredCleaningTime, $cleaningFrequency, $languagePreference)) {
+    if ($updateController->updateProfile($userId, $phone, $address, $preferredCleaningTime, $consultationFrequency, $languagePreference)) {
         $message = "Profile updated successfully.";
       
         $profileData = $viewController->getProfileByUserId($userId);
@@ -40,7 +40,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Update Homeowner Profile</title>
+    <title>Update PIN Profile</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -183,12 +183,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <body>
 
 <nav>
-    <h1>Update Homeowner Profile</h1>
+    <h1>Update PIN Profile</h1>
     <a class="logout-link" href="../../logout.php"><i class="fas fa-sign-out-alt"></i> Logout</a>
 </nav>
 
 <div class="container">
-    <h2>Edit Homeowner Details</h2>
+    <h2>Edit PIN Details</h2>
 
     <?php if (!empty($message)): ?>
         <div class="message <?= strpos($message, 'success') !== false ? 'success' : 'error' ?>">
@@ -205,20 +205,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <label>Address:</label>
             <textarea name="address" required><?= htmlspecialchars($profile['address']) ?></textarea>
 
-            <label>Preferred Cleaning Time:</label>
-            <select name="preferred_cleaning_time" required>
+            <label>Preferred Consultation Time:</label>
+            <select name="preferred_consultation_time" required>
                 <option value="">Select Time</option>
-                <option value="morning" <?= $profile['preferred_cleaning_time'] === 'morning' ? 'selected' : '' ?>>Morning</option>
-                <option value="afternoon" <?= $profile['preferred_cleaning_time'] === 'afternoon' ? 'selected' : '' ?>>Afternoon</option>
-                <option value="evening" <?= $profile['preferred_cleaning_time'] === 'evening' ? 'selected' : '' ?>>Evening</option>
+                <option value="morning" <?= $profile['preferred_consultation_time'] === 'morning' ? 'selected' : '' ?>>Morning</option>
+                <option value="afternoon" <?= $profile['preferred_consultation_time'] === 'afternoon' ? 'selected' : '' ?>>Afternoon</option>
+                <option value="evening" <?= $profile['preferred_consultation_time'] === 'evening' ? 'selected' : '' ?>>Evening</option>
             </select>
 
-            <label>Cleaning Frequency:</label>
-            <select name="cleaning_frequency" required>
+            <label>Consultation Frequency:</label>
+            <select name="consultation_frequency" required>
                 <option value="">Select Frequency</option>
-                <option value="weekly" <?= $profile['cleaning_frequency'] === 'weekly' ? 'selected' : '' ?>>Weekly</option>
-                <option value="biweekly" <?= $profile['cleaning_frequency'] === 'biweekly' ? 'selected' : '' ?>>Biweekly</option>
-                <option value="monthly" <?= $profile['cleaning_frequency'] === 'monthly' ? 'selected' : '' ?>>Monthly</option>
+                <option value="weekly" <?= $profile['consultation_frequency'] === 'weekly' ? 'selected' : '' ?>>Weekly</option>
+                <option value="biweekly" <?= $profile['consultation_frequency'] === 'biweekly' ? 'selected' : '' ?>>Biweekly</option>
+                <option value="monthly" <?= $profile['consultation_frequency'] === 'monthly' ? 'selected' : '' ?>>Monthly</option>
             </select>
 
             <label>Language Preference:</label>
