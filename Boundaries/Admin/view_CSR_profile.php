@@ -9,7 +9,7 @@ if (!isset($_SESSION['user']) || $_SESSION['user']['role'] !== 'admin') {
     exit;
 }
 
-$cleanerId = $_GET['id'] ?? null;
+$CSRId = $_GET['id'] ?? null;
 if (!$CSRId) {
     echo "CSR ID is required.";
     exit;
@@ -18,7 +18,7 @@ if (!$CSRId) {
 $profileController = new ViewCSRProfileController();
 $categoryController = new ViewServiceCategoryController();
 
-$profile = $profileController->getProfile($cleanerId);
+$profile = $profileController->getProfile($CSRId);
 
 $categoryName = '';
 if ($profile && !empty($profile['expertise'])) {
@@ -162,11 +162,11 @@ if ($profile && !empty($profile['expertise'])) {
         <label>Expertise:</label>
         <input type="text" value="<?= htmlspecialchars($categoryName) ?>" readonly>
 
-        <label>Preferred Working Time:</label>
-        <input type="text" value="<?= htmlspecialchars($profile['preferred_working_time']) ?>" readonly>
+        <label>Preferred Consultation Time:</label>
+        <input type="text" value="<?= htmlspecialchars($profile['preferred_consultation_time']) ?>" readonly>
 
-        <label>Working Frequency:</label>
-        <input type="text" value="<?= htmlspecialchars($profile['working_frequency']) ?>" readonly>
+        <label>Consultation Frequency:</label>
+        <input type="text" value="<?= htmlspecialchars($profile['consultation_frequency']) ?>" readonly>
 
         <label>Language Preference:</label>
         <input type="text" value="<?= htmlspecialchars($profile['language_preference']) ?>" readonly>
