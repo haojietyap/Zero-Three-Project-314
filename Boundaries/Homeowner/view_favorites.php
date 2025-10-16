@@ -1,24 +1,24 @@
 <?php
 session_start();
-require_once __DIR__ . '/../../Controllers/Homeowner/GetFavoritesByHomeownerController.php';
-require_once __DIR__ . '/../../Controllers/Homeowner/SearchFavoritesController.php';
+require_once __DIR__ . '/../../Controllers/PIN/GetFavoritesByPINController.php';
+require_once __DIR__ . '/../../Controllers/PIN/SearchFavoritesController.php';
 
 
-if (!isset($_SESSION['user']) || $_SESSION['user']['role'] !== 'homeowner') {
+if (!isset($_SESSION['user']) || $_SESSION['user']['role'] !== 'PIN') {
     header("Location: ../../login.php");
     exit;
 }
 
-$homeownerId = $_SESSION['user']['id'];
+$PINId = $_SESSION['user']['id'];
 $keyword = $_GET['search'] ?? '';
 
-$favoriteController = new GetFavoritesByHomeownerController();
+$favoriteController = new GetFavoritesByPINController();
 $searchController = new SearchFavoritesController();
 
 
 $favorites = $keyword !== ''
-    ? $searchController->search($homeownerId, $keyword)
-    : $favoriteController->get($homeownerId);
+    ? $searchController->search($PINId, $keyword)
+    : $favoriteController->get($PINId);
 ?>
 
 
@@ -26,7 +26,7 @@ $favorites = $keyword !== ''
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>My Favorite Cleaners</title>
+    <title>My Favorite CSR</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
     <style>
         body {
@@ -230,7 +230,7 @@ $favorites = $keyword !== ''
 <body>
 
 <div class="container">
-    <h2>❤ My Favorite Cleaners</h2>
+    <h2>❤ My Favorite CSR</h2>
 
     <form method="GET">
         <input type="text" name="search" placeholder="Search by name or category" value="<?= htmlspecialchars($keyword) ?>">
@@ -249,11 +249,11 @@ $favorites = $keyword !== ''
                         <p><strong>Category:</strong> <?= htmlspecialchars($favorite['category_name'] ?? '-') ?></p>
                     </div>
 					
-					<a class="btn view-btn" href="view_cleaner_profile_homeowner.php?id=<?= htmlspecialchars($favorite['cleaner_id']) ?>">View Profile</a>
+					<a class="btn view-btn" href="view_CSR_profile_PIN.php?id=<?= htmlspecialchars($favorite['CSR_id']) ?>">View Profile</a>
 					
                     <a class="remove-btn"
-					href="remove_favorite.php?cleaner_id=<?php echo $favorite['cleaner_id']; ?>"
-					onclick="return confirm('Remove this cleaner from favorites?');">
+					href="remove_favorite.php?CSR_id=<?php echo $favorite['CSR_id']; ?>"
+					onclick="return confirm('Remove this CSR from favorites?');">
 					Remove
 					</a>
 					
@@ -262,8 +262,9 @@ $favorites = $keyword !== ''
         </div>
     <?php endif; ?>
 
-    <a href="homeowner_dashboard.php" class="back-link">Back To Dashboard</a>
+    <a href="PIN_dashboard.php" class="back-link">Back To Dashboard</a>
 </div>
 
 </body>
 </html>
+
