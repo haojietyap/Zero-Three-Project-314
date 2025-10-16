@@ -5,7 +5,7 @@ require_once __DIR__ . '/../../Controllers/profiles/SearchUsersProfileController
 require_once __DIR__ . '/../../Controllers/profiles/Admin/CheckAdminProfileStatusController.php';
 require_once __DIR__ . '/../../Controllers/Profiles/PIN/CheckPINProfileStatusController.php';
 require_once __DIR__ . '/../../Controllers/Profiles/CSR/CheckCSRProfileStatusController.php';
-require_once __DIR__ . '/../../Controllers/profiles/PlatformManager/CheckPlatformManagerProfileStatusController.php';
+require_once __DIR__ . '/../../Controllers/profiles/Management/CheckManagementProfileStatusController.php';
 
 if (!isset($_SESSION['user']) || $_SESSION['user']['role'] !== 'admin') {
     header("Location: login.php");
@@ -18,7 +18,7 @@ $getUserProfilesController = new GetUserProfilesController();
 $checkAdminStatusController = new CheckAdminProfileStatusController();
 $checkPINStatusController = new CheckPINProfileStatusController();
 $checkCSRStatusController = new CheckCSRProfileStatusController();
-$checkPlatformManagerStatusController = new CheckPlatformManagerProfileStatusController();
+$checkManagementStatusController = new CheckManagementProfileStatusController();
 
 
 $keyword = $_GET['search'] ?? '';
@@ -238,9 +238,9 @@ $users = $keyword
 		$base = 'admin';
 
 	}
-	elseif ($role === 'platformmanager') {
-		$status = $checkPlatformManagerStatusController->getProfileStatus($userId);
-		$base = 'platformmanager';
+	elseif ($role === 'management') {
+		$status = $checkManagementStatusController->getProfileStatus($userId);
+		$base = 'management';
 
 	}
 	elseif ($role === 'PIN') {
@@ -291,6 +291,7 @@ $users = $keyword
 </div>
 </body>
 </html>
+
 
 
 
