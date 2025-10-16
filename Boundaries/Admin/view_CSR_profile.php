@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once __DIR__ . '/../../Controllers/Profiles/Cleaner/ViewCleanerProfileController.php';
+require_once __DIR__ . '/../../Controllers/Profiles/CSR/ViewCSRProfileController.php';
 require_once __DIR__ . '/../../Controllers/Service Category/ViewServiceCategoryController.php';
 
 
@@ -10,12 +10,12 @@ if (!isset($_SESSION['user']) || $_SESSION['user']['role'] !== 'admin') {
 }
 
 $cleanerId = $_GET['id'] ?? null;
-if (!$cleanerId) {
-    echo "Cleaner ID is required.";
+if (!$CSRId) {
+    echo "CSR ID is required.";
     exit;
 }
 
-$profileController = new ViewCleanerProfileController();
+$profileController = new ViewCSRProfileController();
 $categoryController = new ViewServiceCategoryController();
 
 $profile = $profileController->getProfile($cleanerId);
@@ -31,7 +31,7 @@ if ($profile && !empty($profile['expertise'])) {
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>View Cleaner Profile</title>
+    <title>View CSR Profile</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -148,7 +148,7 @@ if ($profile && !empty($profile['expertise'])) {
 <body>
 
 <div class="container">
-        <h2>Cleaner Profile</h2>
+        <h2>CSR Profile</h2>
 		
         <label>Phone:</label>
         <input type="text" value="<?= htmlspecialchars($profile['phone']) ?>" readonly>
@@ -162,11 +162,11 @@ if ($profile && !empty($profile['expertise'])) {
         <label>Expertise:</label>
         <input type="text" value="<?= htmlspecialchars($categoryName) ?>" readonly>
 
-        <label>Preferred Cleaning Time:</label>
-        <input type="text" value="<?= htmlspecialchars($profile['preferred_cleaning_time']) ?>" readonly>
+        <label>Preferred Working Time:</label>
+        <input type="text" value="<?= htmlspecialchars($profile['preferred_working_time']) ?>" readonly>
 
-        <label>Cleaning Frequency:</label>
-        <input type="text" value="<?= htmlspecialchars($profile['cleaning_frequency']) ?>" readonly>
+        <label>Working Frequency:</label>
+        <input type="text" value="<?= htmlspecialchars($profile['working_frequency']) ?>" readonly>
 
         <label>Language Preference:</label>
         <input type="text" value="<?= htmlspecialchars($profile['language_preference']) ?>" readonly>
