@@ -17,14 +17,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $phone = $_POST['phone'] ?? '';
     $address = $_POST['address'] ?? '';
     $experience = $_POST['experience'] ?? '';
-    $preferred_working_time = $_POST['preferred_working_time'] ?? '';
-    $working_frequency = $_POST['working_frequency'] ?? '';
+    $preferred_consultation_time = $_POST['preferred_consultation_time'] ?? '';
+    $consultation_frequency = $_POST['consultation_frequency'] ?? '';
     $language_preference = $_POST['language_preference'] ?? '';
     $preferredCategoryId = $_POST['expertise'] ?? '';
 
     $result = $createCSRProfileController->createProfile(
         $userId, $phone, $address, $experience,
-        $preferred_working_time, $working_frequency,
+        $preferred_consultation_time, $consultation_frequency,
         $language_preference,$preferredCategoryId, $rating
     );
 
@@ -172,16 +172,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <?php endforeach; ?>
         </select>
 
-        <label>Preferred Working Time:</label>
-        <select name="preferred_working_time" required>
+        <label>Preferred Consultation Time:</label>
+        <select name="preferred_consultation_time" required>
             <option value="">--Select Time--</option>
             <option value="morning">Morning</option>
             <option value="afternoon">Afternoon</option>
             <option value="evening">Evening</option>
         </select>
 
-        <label>Working Frequency:</label>
-        <select name="working_frequency" required>
+        <label>Consultation Frequency:</label>
+        <select name="consultation_frequency" required>
             <option value="">--Select Frequency--</option>
             <option value="weekly">Weekly</option>
             <option value="biweekly">Biweekly</option>
@@ -205,6 +205,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 </body>
 </html>
+
 
 
 
