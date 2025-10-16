@@ -2,29 +2,29 @@
 session_start();
 require_once __DIR__ . '/../../Controllers/ConfirmedJobs/AddConfirmedJobController.php';
 
-if (!isset($_SESSION['user']) || $_SESSION['user']['role'] !== 'homeowner') {
+if (!isset($_SESSION['user']) || $_SESSION['user']['role'] !== 'PIN') {
     header("Location: ../../login.php");
     exit;
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $jobId = $_POST['job_id'] ?? null;
-    $cleanerId = $_POST['cleaner_id'] ?? null;
-    $homeownerId = $_SESSION['user']['id'];
+    $CSRId = $_POST['CSR_id'] ?? null;
+    $PINId = $_SESSION['user']['id'];
     $matchedDate = date('Y-m-d');
 
-    if ($jobId && $cleanerId) {
+    if ($jobId && $CSRId) {
         $controller = new AddConfirmedJobController();
-        $success = $controller->add($jobId, $cleanerId, $homeownerId, $matchedDate);
+        $success = $controller->add($jobId, $CSRId, $PINId, $matchedDate);
 
         if ($success) {
-            header("Location: view_confirmed_jobs_homeowner.php?status=success");
+            header("Location: view_confirmed_jobs_PIN.php?status=success");
             exit;
         } else {
             $error = "Failed to confirm the job.";
         }
     } else {
-        $error = "Missing job or cleaner ID.";
+        $error = "Missing job or CSR ID.";
     }
 }
 ?>
@@ -35,7 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <title>Confirm Job</title>
 </head>
 <body>
-    <h2>Confirm Cleaning Job</h2>
+    <h2>Confirm Consultation Job</h2>
 
     <?php if (isset($error)): ?>
         <p style="color: red;"><?= $error ?></p>
@@ -45,3 +45,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <a href="javascript:history.back()">Go Back</a>
 </body>
 </html>
+
