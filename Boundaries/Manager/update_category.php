@@ -2,7 +2,7 @@
 session_start();
 require_once __DIR__ . '/../../Controllers/Service Category/UpdateServiceCategoryController.php';
 
-if (!isset($_SESSION['user']) || $_SESSION['user']['role'] !== 'manager') {
+if (!isset($_SESSION['user']) || $_SESSION['user']['role'] !== 'management') {
     header("Location: ../../login.php");
     exit;
 }
@@ -181,3 +181,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 </body>
 </html>
+
