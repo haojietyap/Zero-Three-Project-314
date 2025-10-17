@@ -2,8 +2,9 @@
 require_once __DIR__ . '/../../Entities/ConfirmedJob.php';
 
 class CountCompletedByServiceController {
-    public function getStats($cleanerId) {
+    public function getStats($CSRId) {
         $confirmedJob = new ConfirmedJob();
-        return $confirmedJob->countCompletedByService($cleanerId);
+        return $confirmedJob->countCompletedByService($CSRId);
     }
 }
+
