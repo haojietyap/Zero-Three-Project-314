@@ -3,7 +3,7 @@ session_start();
 require_once __DIR__ . '/../../Controllers/Service Category/ViewServiceCategoryController.php';
 require_once __DIR__ . '/../../Controllers/Service Category/SearchServiceCategoryController.php';
 
-if (!isset($_SESSION['user']) || $_SESSION['user']['role'] !== 'manager') {
+if (!isset($_SESSION['user']) || $_SESSION['user']['role'] !== 'management') {
     header("Location: ../../login.php");
     exit;
 }
@@ -319,8 +319,9 @@ $categories = !empty($keyword)
         <p class="no-data">No service categories found.</p>
     <?php endif; ?>
 
-    <a class="back-link" href="manager_dashboard.php">← Back to Dashboard</a>
+    <a class="back-link" href="management_dashboard.php">← Back to Dashboard</a>
 </div>
 
 </body>
 </html>
+
