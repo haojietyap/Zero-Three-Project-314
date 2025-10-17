@@ -2,7 +2,7 @@
 session_start();
 require_once __DIR__ . '/../../Controllers/Service Category/SuspendServiceCategoryController.php';
 
-if (!isset($_SESSION['user']) || $_SESSION['user']['role'] !== 'manager') {
+if (!isset($_SESSION['user']) || $_SESSION['user']['role'] !== 'management') {
     header("Location: ../../login.php");
     exit;
 }
@@ -22,3 +22,4 @@ if ($suspendServiceCategoryController->suspend($categoryId)) {
     echo "Failed to suspend the category.";
 }
 ?>
+
