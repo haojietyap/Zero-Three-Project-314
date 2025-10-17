@@ -2,8 +2,9 @@
 require_once __DIR__ . '/../../Entities/Favorite.php';
 
 class SearchFavoritesController {
-    public function search($homeownerId, $keyword) {
+    public function search($PINId, $keyword) {
         $favorite = new Favorite();
-        return $favorite->searchFavoritesByHomeowner($homeownerId, $keyword);
+        return $favorite->searchFavoritesByPIN($PINId, $keyword);
     }
 }
+
