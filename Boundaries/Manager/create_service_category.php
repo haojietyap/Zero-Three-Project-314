@@ -2,7 +2,7 @@
 session_start();
 require_once __DIR__ . '/../../Controllers/Service Category/CreateServiceCategoryController.php';
 
-if (!isset($_SESSION['user']) || $_SESSION['user']['role'] !== 'manager') {
+if (!isset($_SESSION['user']) || $_SESSION['user']['role'] !== 'management') {
     header("Location: ../../login.php");
     exit;
 }
@@ -183,7 +183,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     <form method="POST">
         <label>Category Name:</label>
-        <input type="text" name="name" placeholder="e.g. Deep Cleaning" required>
+        <input type="text" name="name" placeholder="e.g. Bring PIN To See Doctor" required>
 
         <label>Description:</label>
         <textarea name="description" placeholder="Brief description of this service..." rows="4" required></textarea>
@@ -191,8 +191,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <button type="submit">Create Category</button>
     </form>
 
-    <a class="back-link" href="manager_dashboard.php">Back to Dashboard</a>
+    <a class="back-link" href="management_dashboard.php">Back to Dashboard</a>
 </div>
 
 </body>
 </html>
+
