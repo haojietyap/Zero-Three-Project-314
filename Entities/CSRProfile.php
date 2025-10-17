@@ -1,7 +1,7 @@
 <?php
 require_once __DIR__ . '/../Utilities/DB.php';
 
-class CleanerProfile {
+class CSRProfile {
     private $conn;
 
     public function __construct() {
@@ -9,7 +9,7 @@ class CleanerProfile {
     }
 	
 	public function exists($userId) {
-		$stmt = $this->conn->prepare("SELECT * FROM cleaner_profiles WHERE user_id = ?");
+		$stmt = $this->conn->prepare("SELECT * FROM CSR_profiles WHERE user_id = ?");
 		$stmt->bind_param("i", $userId);
 		$stmt->execute();
 		$result = $stmt->get_result();
@@ -17,16 +17,16 @@ class CleanerProfile {
 	}
 	
 	public function getProfileByUserId($userId) {
-		$stmt = $this->conn->prepare("SELECT * FROM cleaner_profiles WHERE user_id = ?");
+		$stmt = $this->conn->prepare("SELECT * FROM CSR_profiles WHERE user_id = ?");
 		$stmt->bind_param("i", $userId);
 		$stmt->execute();
 		$result = $stmt->get_result();
 		return $result->fetch_assoc();
 	}
 
-    public function createProfile($userId, $phone, $address, $experience, $preferredCleaningTime, $cleaningFrequency, 
+    public function createProfile($userId, $phone, $address, $experience, $preferredConsultationTime, $consultationFrequency, 
 								  $languagePreference, $expertise, $rating) {
-		$stmt = $this->conn->prepare("SELECT * FROM cleaner_profiles WHERE user_id = ?");
+		$stmt = $this->conn->prepare("SELECT * FROM CSR_profiles WHERE user_id = ?");
 		$stmt->bind_param("i", $userId);
 		$stmt->execute();
 		$stmt->store_result();
@@ -34,17 +34,17 @@ class CleanerProfile {
         return 'exists';
     }
 
-    $stmt = $this->conn->prepare("INSERT INTO cleaner_profiles 
-        (user_id, phone, address, experience, preferred_cleaning_time, cleaning_frequency, language_preference, expertise, rating, status)
+    $stmt = $this->conn->prepare("INSERT INTO CSR_profiles 
+        (user_id, phone, address, experience, preferred_consultation_time, consultation_frequency, language_preference, expertise, rating, status)
         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 'active')");
-		$stmt->bind_param("isssssssd", $userId, $phone, $address, $experience, $preferredCleaningTime, $cleaningFrequency, $languagePreference, $expertise, $rating);
+		$stmt->bind_param("isssssssd", $userId, $phone, $address, $experience, $preferredConsultationTime, $consultationFrequency, $languagePreference, $expertise, $rating);
 		return $stmt->execute() ? 'success' : 'error';
 	}
 
 
-    public function getCleanerProfileByUserId($userId) {
+    public function getCSRProfileByUserId($userId) {
         $sql = "SELECT cp.*, sc.name AS category_name 
-                FROM cleaner_profiles cp 
+                FROM CSR_profiles cp 
                 LEFT JOIN service_categories sc 
                 ON cp.expertise = sc.category_id
                 WHERE cp.user_id = '$userId'";
@@ -52,53 +52,53 @@ class CleanerProfile {
         return mysqli_fetch_assoc($result);
     }
 	
-	public function updateCleanerProfile($userId, $phone, $address, $experience, $preferredCleaningTime, $cleaningFrequency, 
+	public function updateCleanerProfile($userId, $phone, $address, $experience, $preferredConsultationTime, $consultationFrequency, 
 					$languagePreference, $expertise, $rating) {
-		$sql = "UPDATE cleaner_profiles SET 
+		$sql = "UPDATE CSR_profiles SET 
                 phone = ?, 
                 address = ?, 
                 experience = ?, 
-                preferred_cleaning_time = ?, 
-                cleaning_frequency = ?, 
+                preferred_consultation_time = ?, 
+                consultation_frequency = ?, 
                 language_preference = ?, 
                 expertise = ?, 
                 rating = ?
 				WHERE user_id = ?";
 
 		$stmt = $this->conn->prepare($sql);
-		$stmt->bind_param("sssssssdi", $phone, $address, $experience, $preferredCleaningTime, $cleaningFrequency, $languagePreference, $expertise, $rating, $userId);
+		$stmt->bind_param("sssssssdi", $phone, $address, $experience, $preferredConsultationTime, $consultationFrequency, $languagePreference, $expertise, $rating, $userId);
     
 		return $stmt->execute();
 	}
 
 	public function suspendProfile($userId) {
-		$sql = "UPDATE cleaner_profiles SET status = 'suspended' WHERE user_id = ?";
+		$sql = "UPDATE CSR_profiles SET status = 'suspended' WHERE user_id = ?";
 		$stmt = $this->conn->prepare($sql);
 		$stmt->bind_param("i", $userId);
 
 		return $stmt->execute();
 	}
  	
-	public function getAllActiveCleaners() {
+	public function getAllActiveCSR() {
 		$sql = "SELECT cp.*, u.name, u.email, sc.name AS category_name
-				FROM cleaner_profiles cp
+				FROM CSR_profiles cp
 				JOIN users u ON cp.user_id = u.id
 				LEFT JOIN service_categories sc ON cp.expertise = sc.category_id
 				WHERE cp.status = 'active' AND u.status = 'active'";
     
 		$result = mysqli_query($this->conn, $sql);
 
-		$cleaners = [];
+		$CSR = [];
 			while ($row = mysqli_fetch_assoc($result)) {
-			$cleaners[] = $row;
+			$CSR[] = $row;
 		}
 
-		return $cleaners;
+		return $CSR;
 	}
 
-	public function searchCleanersByCategoryOrRating($keyword) { //Homeowner
+	public function searchCSRByCategoryOrRating($keyword) { //PIN
     $sql = "SELECT cp.*, u.name, sc.name AS category_name
-            FROM cleaner_profiles cp
+            FROM CSR_profiles cp
             JOIN users u ON cp.user_id = u.id
             LEFT JOIN service_categories sc ON cp.expertise = sc.category_id
             WHERE cp.status = 'active'
@@ -109,13 +109,14 @@ class CleanerProfile {
             )";
 
     $result = mysqli_query($this->conn, $sql);
-    $cleaners = [];
+    $CSR = [];
     while ($row = mysqli_fetch_assoc($result)) {
-        $cleaners[] = $row;
+        $CSR[] = $row;
     }
-    return $cleaners;
+    return $CSR;
 }
 
 	
 }
 ?>
+
