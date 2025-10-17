@@ -2,8 +2,9 @@
 require_once __DIR__ . '/../../Entities/Shortlists.php';
 
 class AddShortlistController {
-    public function add($homeownerId, $jobId) {
+    public function add($PINId, $jobId) {
         $shortlists = new Shortlists($conn);
-        return $shortlists->addToShortlist($homeownerId, $jobId);
+        return $shortlists->addToShortlist($PINId, $jobId);
     }
 }
+
