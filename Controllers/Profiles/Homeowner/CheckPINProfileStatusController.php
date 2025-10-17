@@ -1,9 +1,9 @@
 <?php
-require_once __DIR__ . '/../../../Entities/HomeownerProfile.php';
+require_once __DIR__ . '/../../../Entities/PINProfile.php';
 
-class CheckHomeownerProfileStatusController {
+class CheckPINProfileStatusController {
     public function getProfileStatus($userId) {
-        $profile = new HomeownerProfile();
+        $profile = new PINProfile();
 
         if (!$profile->exists($userId)) {
             return 'not_created';
@@ -13,3 +13,4 @@ class CheckHomeownerProfileStatusController {
         return $data['status'] ?? 'unknown';
     }
 }
+
