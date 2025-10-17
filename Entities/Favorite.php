@@ -8,58 +8,59 @@ class Favorite {
         $this->conn = getDBConnection();
     }
 
-    public function addFavorite($homeownerId, $cleanerId) {
-        $stmt = $this->conn->prepare("INSERT INTO favorites (homeowner_id, cleaner_id) VALUES (?, ?)");
-        $stmt->bind_param("ii", $homeownerId, $cleanerId);
+    public function addFavorite($PINId, $CSRId) {
+        $stmt = $this->conn->prepare("INSERT INTO favorites (PIN_id, CSR_id) VALUES (?, ?)");
+        $stmt->bind_param("ii", $PINId, $CSRId);
         return $stmt->execute();
     }
 
-    public function removeFavorite($homeownerId, $cleanerId) {
+    public function removeFavorite($PINId, $CSRId) {
         $stmt = $this->conn->prepare("DELETE FROM favorites 
-									WHERE homeowner_id = ? AND cleaner_id = ?");
-        $stmt->bind_param("ii", $homeownerId, $cleanerId);
+									WHERE PIN_id = ? AND CSR_id = ?");
+        $stmt->bind_param("ii", $PINId, $CSRId);
         return $stmt->execute();
     }
 
-    public function isFavorited($homeownerId, $cleanerId) {
+    public function isFavorited($PINId, $CSRId) {
         $stmt = $this->conn->prepare("SELECT * FROM favorites 
-									WHERE homeowner_id = ? AND cleaner_id = ?");
-        $stmt->bind_param("ii", $homeownerId, $cleanerId);
+									WHERE PIN_id = ? AND CSR_id = ?");
+        $stmt->bind_param("ii", $PINId, $CSRId);
         $stmt->execute();
         $result = $stmt->get_result();
         return $result->num_rows > 0;
     }
 	
-    public function getFavoritesByHomeowner($homeownerId) {
-       $stmt = $this->conn->prepare("SELECT u.id AS cleaner_id, u.name, sc.name AS category_name
+    public function getFavoritesByPIN($PIN) {
+       $stmt = $this->conn->prepare("SELECT u.id AS CSR_id, u.name, sc.name AS category_name
 									FROM favorites f
-									JOIN users u ON f.cleaner_id = u.id
-									LEFT JOIN cleaner_profiles cp ON cp.user_id = u.id
+									JOIN users u ON f.CSR_id = u.id
+									LEFT JOIN CSR_profiles cp ON cp.user_id = u.id
 									LEFT JOIN service_categories sc ON cp.expertise = sc.category_id
-									WHERE f.homeowner_id = ?
+									WHERE f.PIN_id = ?
 									AND cp.status = 'active'
 									AND u.status = 'active'");
 									
-        $stmt->bind_param("i", $homeownerId);
+        $stmt->bind_param("i", PINId);
         $stmt->execute();
         return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
     }
 	
-	public function searchFavoritesByHomeowner($homeownerId, $keyword) {
-		$sql = "SELECT u.id AS cleaner_id, u.name, sc.name AS category_name
+	public function searchFavoritesByPIN($PINId, $keyword) {
+		$sql = "SELECT u.id AS CSR_id, u.name, sc.name AS category_name
 				FROM favorites f
-				JOIN users u ON f.cleaner_id = u.id
-				JOIN cleaner_profiles cp ON cp.user_id = u.id
+				JOIN users u ON f.CSR_id = u.id
+				JOIN CSR_profiles cp ON cp.user_id = u.id
 				JOIN service_categories sc ON cp.expertise = sc.category_id
-				WHERE f.homeowner_id = ?
+				WHERE f.PIN_id = ?
 				AND (u.name LIKE ? OR sc.name LIKE ?)";
 
 		$stmt = $this->conn->prepare($sql);
 		$like = "%$keyword%";
-		$stmt->bind_param("iss", $homeownerId, $like, $like);
+		$stmt->bind_param("iss", $PINId, $like, $like);
 		$stmt->execute();
 		return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
 	}
 
 }
 ?>
+
