@@ -1,6 +1,6 @@
 <?php
 function getDBConnection() {
-    $conn = mysqli_connect("localhost", "root", "", "c2c_platform",3307);
+    $conn = mysqli_connect("localhost", "root", "", "CSRPIN_platform",3307);
 
     if (!$conn) 
 	{
