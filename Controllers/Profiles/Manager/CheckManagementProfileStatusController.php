@@ -1,9 +1,9 @@
 <?php
-require_once __DIR__ . '/../../../Entities/ManagerProfile.php';
+require_once __DIR__ . '/../../../Entities/ManagementProfile.php';
 
-class CheckManagerProfileStatusController {
+class CheckManagementProfileStatusController {
     public function getProfileStatus($userId) {
-        $profile = new ManagerProfile();
+        $profile = new ManagementProfile();
 
         if (!$profile->exists($userId)) {
             return 'not_created';
@@ -13,3 +13,4 @@ class CheckManagerProfileStatusController {
         return $data['status'] ?? 'unknown';
     }
 }
+
