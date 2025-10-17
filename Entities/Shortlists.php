@@ -9,16 +9,16 @@ class Shortlists {
     }
 
     public function addToShortlist($homeownerId, $jobId) {
-        $checkSql = "SELECT 1 FROM shortlists WHERE homeowner_id = ? AND job_id = ?";
+        $checkSql = "SELECT 1 FROM shortlists WHERE PIN_id = ? AND job_id = ?";
         $stmt = $this->conn->prepare($checkSql);
-        $stmt->bind_param("ii", $homeownerId, $jobId);
+        $stmt->bind_param("ii", $PINId, $jobId);
         $stmt->execute();
         $stmt->store_result();
 
         if ($stmt->num_rows === 0) {
-            $insertSql = "INSERT INTO shortlists (homeowner_id, job_id) VALUES (?, ?)";
+            $insertSql = "INSERT INTO shortlists (PIN_id, job_id) VALUES (?, ?)";
             $insertStmt = $this->conn->prepare($insertSql);
-            $insertStmt->bind_param("ii", $homeownerId, $jobId);
+            $insertStmt->bind_param("ii", $PINId, $jobId);
             return $insertStmt->execute();
         }
 
@@ -37,3 +37,4 @@ class Shortlists {
     }
 
 }
+
