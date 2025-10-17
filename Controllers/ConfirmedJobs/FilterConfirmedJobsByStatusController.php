@@ -2,8 +2,9 @@
 require_once __DIR__ . '/../../Entities/ConfirmedJob.php';
 
 class FilterConfirmedJobsByStatusController {
-    public function filter($cleanerId, $status) {
+    public function filter($CSRId, $status) {
         $confirmedJob = new ConfirmedJob();
-        return $confirmedJob->filterJobsByCleanerWithStatus($cleanerId, $status);
+        return $confirmedJob->filterJobsByCSRWithStatus($CSRId, $status);
     }
 }
+
