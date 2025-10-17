@@ -7,7 +7,7 @@ $controller = new MonthlyStatsReportController();
 $result = $controller->getMonthlyStats();
 $row = $result->fetch_assoc();
 
-$activeCleaners = $row['active_cleaners'];
+$activeCSR = $row['active_CSR'];
 $completedJobs = $row['completed_jobs'];
 ?>
 
@@ -153,8 +153,8 @@ $completedJobs = $row['completed_jobs'];
             <th>Value</th>
         </tr>
         <tr>
-            <td>Number Of Cleaners Who Had Confirmed Jobs</td>
-            <td><strong><?= $activeCleaners ?></strong></td>
+            <td>Number Of CSR Who Had Confirmed Jobs</td>
+            <td><strong><?= $activeCSR ?></strong></td>
         </tr>
         <tr>
             <td>Total Of Completed Jobs</td>
@@ -163,9 +163,10 @@ $completedJobs = $row['completed_jobs'];
     </table>
 
     <div class="button-wrapper">
-        <a href="manager_dashboard.php" class="back-link">Back to Dashboard</a>
+        <a href="management_dashboard.php" class="back-link">Back to Dashboard</a>
     </div>
 </div>
 
 </body>
 </html>
+
