@@ -2,8 +2,9 @@
 require_once __DIR__ . '/../../Entities/Favorite.php';
 
 class AddFavoriteController {
-    public function add($homeownerId, $cleanerId) {
+    public function add($PINId, $CSRId) {
         $favorite = new Favorite();
-        return $favorite->addFavorite($homeownerId, $cleanerId);
+        return $favorite->addFavorite($PINId, $CSRId);
     }
 }
+
