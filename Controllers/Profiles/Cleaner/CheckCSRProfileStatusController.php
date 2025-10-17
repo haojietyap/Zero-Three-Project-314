@@ -1,9 +1,9 @@
 <?php
-require_once __DIR__ . '/../../../Entities/CleanerProfile.php';
+require_once __DIR__ . '/../../../Entities/CSRProfile.php';
 
-class CheckCleanerProfileStatusController {
+class CheckCSRProfileStatusController {
     public function getProfileStatus($userId) {
-		$profile = new CleanerProfile();
+		$profile = new CSRProfile();
 		
     if (!$profile->exists($userId)) {
         return 'not_created';
@@ -13,4 +13,5 @@ class CheckCleanerProfileStatusController {
      return $data['status'] ?? 'unknown';
 	}
 }
+
 
