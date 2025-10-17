@@ -1,19 +1,19 @@
 <?php
-require_once __DIR__ .'/../../../Entities/CleanerProfile.php';
+require_once __DIR__ .'/../../../Entities/CSRProfile.php';
 
-class CreateCleanerProfileController {
-    public function createProfile($userId, $phone, $address, $experience, $preferredCleaningTime, $cleaningFrequency, 
+class CreateCSRProfileController {
+    public function createProfile($userId, $phone, $address, $experience, $preferredConsultationTime, $consultationFrequency, 
 								  $languagePreference, $expertise, $rating) {
-        $cleanerProfile = new CleanerProfile();
+        $cleanerProfile = new CSRProfile();
 
-        if (!$cleanerProfile->exists($userId)) {
-            return $cleanerProfile->createProfile(
+        if (!$CSRProfile->exists($userId)) {
+            return $CSRProfile->createProfile(
                 $userId,
                 $phone,
                 $address,
                 $experience,
-                $preferredCleaningTime,
-                $cleaningFrequency,
+                $preferredConsultationTime,
+                $consultationFrequency,
                 $languagePreference,
                 $expertise,
                 $rating
@@ -23,4 +23,5 @@ class CreateCleanerProfileController {
         return false; 
     }
 }
+
 
