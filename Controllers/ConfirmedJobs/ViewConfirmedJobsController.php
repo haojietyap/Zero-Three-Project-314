@@ -2,13 +2,14 @@
 require_once __DIR__ . '/../../Entities/ConfirmedJob.php';
 
 class ViewConfirmedJobsController {
-    public function getByCleaner($cleanerId) {
+    public function getByCSR($CSRId) {
         $confirmedJob = new ConfirmedJob();
-        return $confirmedJob->getJobsByCleaner($cleanerId);
+        return $confirmedJob->getJobsByCSR($CSRId);
     }
 
-    public function getByHomeowner($homeownerId) {
+    public function getByPIN($PINId) {
         $confirmedJob = new ConfirmedJob();
-        return $confirmedJob->getByHomeowner($homeownerId);
+        return $confirmedJob->getByPIN($PINId);
     }
 }
+
