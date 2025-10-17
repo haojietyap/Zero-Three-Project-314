@@ -1,19 +1,19 @@
 <?php
 session_start();
 
-if (!isset($_SESSION['user']) || $_SESSION['user']['role'] !== 'manager') {
+if (!isset($_SESSION['user']) || $_SESSION['user']['role'] !== 'management') {
     header("Location: login.php");
     exit;
 }
 
-$homeownerEmail = $_SESSION['user']['email'];
+$PINEmail = $_SESSION['user']['email'];
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Cleaner Dashboard</title>
+    <title>CSR Dashboard</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -145,15 +145,15 @@ $homeownerEmail = $_SESSION['user']['email'];
 
 <body>
     <nav>
-        <h1>Manager Dashboard</h1>
+        <h1>Management Dashboard</h1>
         <a href="../logout.php" class="logout-link"><i class="fas fa-sign-out-alt"></i> Logout</a>
     </nav>
 
     <div class="container">
         <h2>Welcome, Platform Manager 🧑‍💼</h2>
-        <p>You are logged in as: <strong><?= htmlspecialchars($homeownerEmail) ?></strong></p>
+        <p>You are logged in as: <strong><?= htmlspecialchars($PINEmail) ?></strong></p>
 
-        <h3>Manager Menu:</h3>
+        <h3>Management Menu:</h3>
         <ul>
            
             <li><a href="create_service_category.php"><i class="fas fa-plus-circle"></i> Create Service Category</a></li>
@@ -166,3 +166,4 @@ $homeownerEmail = $_SESSION['user']['email'];
     </div>
 </body>
 </html>
+
