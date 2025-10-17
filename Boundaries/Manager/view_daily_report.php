@@ -135,10 +135,11 @@ $today = date('d-m-y');
         </tr>
     </table>
 
-    <a href="manager_dashboard.php" class="back-link">Back to Dashboard</a>
+    <a href="management_dashboard.php" class="back-link">Back to Dashboard</a>
 </div>
 
 </body>
 </html>
+
 
 
