@@ -156,9 +156,10 @@ $result = $controller->getStats();
     </table>
 
     <div class="button-wrapper">
-        <a href="manager_dashboard.php" class="back-link">Back to Dashboard</a>
+        <a href="management_dashboard.php" class="back-link">Back to Dashboard</a>
     </div>
 </div>
 
 </body>
 </html>
+
