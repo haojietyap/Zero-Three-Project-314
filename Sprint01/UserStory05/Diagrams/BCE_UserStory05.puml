@@ -1,0 +1,40 @@
+@startuml
+title UserStory05 – Search for User Accounts (BCE)
+
+skinparam componentStyle rectangle
+hide fields
+
+class AdminUsersPage <<Boundary>> {
+  + showList() : void
+  + renderSearchForm(q) : void
+  + renderUsersTable(users) : void
+}
+
+class UsersController <<Controller>> {
+  + search(q) : array     ' returns { ok, users }
+  + listUsers() : array   ' returns { ok, users } when q is empty
+}
+
+class User <<Entity>> {
+  + search(q) : array     ' returns rows[] from DB
+  + all() : array         ' returns rows[] from DB
+}
+
+' Usage relationships (Boundary → Controller → Entity)
+AdminUsersPage --> UsersController : uses (search / listUsers)
+UsersController --> User : uses (search / all)
+
+' Optional notes to make the return flow explicit (matches your code)
+note right of UsersController
+  returns arrays shaped like:
+  { ok: true, users: [...] }
+end note
+
+note bottom of AdminUsersPage
+  showList():
+   - reads q from GET
+   - if q != '' → controller.search(q)
+   - else       → controller.listUsers()
+   - renderUsersTable(users)
+end note
+@enduml

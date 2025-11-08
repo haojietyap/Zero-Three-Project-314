@@ -1,0 +1,43 @@
+@startuml
+title UserStory05 – Search for User Accounts (Sequence)
+
+actor "User Admin" as UA
+participant "AdminUsersPage\n(Boundary)" as B
+participant "UsersController\n(Controller)" as C
+participant "User\n(Entity)" as E
+
+== Open List ==
+UA -> B : showList() with q (from GET ?q=...)
+B -> UA : renderSearchForm(q)
+
+alt q != ''
+  ' Boundary asks Controller to search
+  B -> C : search(q)
+  activate C
+
+  ' Controller asks Entity to run DB search
+  C -> E : search(q)\n-- SELECT ... WHERE full_name LIKE :like1\n--  OR email LIKE :like2 OR userid = :idExact
+  activate E
+  E --> C : return rows[]               ' DB result set
+  deactivate E
+
+  ' Controller returns a standard result
+  C --> B : return { ok:true, users: rows[] }
+  deactivate C
+
+  ' Boundary renders results table
+  B -> UA : renderUsersTable(users)
+
+else q == ''
+  ' Fallback to list all users
+  B -> C : listUsers()
+  activate C
+  C -> E : all()                        ' SELECT ... ORDER BY full_name
+  activate E
+  E --> C : return rows[]
+  deactivate E
+  C --> B : return { ok:true, users: rows[] }
+  deactivate C
+  B -> UA : renderUsersTable(users)
+end
+@enduml

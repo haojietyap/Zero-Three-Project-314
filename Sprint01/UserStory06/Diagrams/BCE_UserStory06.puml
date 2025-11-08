@@ -1,0 +1,29 @@
+@startuml
+title UserStory06 – Assign Role to Unassigned User (BCE)
+
+skinparam componentStyle rectangle
+hide fields
+
+class AdminUsersPage <<Boundary>> {
+  + showUnassigned() : void
+  + showAssignRole() : void
+  + submitAssignRole() : void
+}
+
+class UsersController <<Controller>> {
+  + listUnassigned() : array        ' { ok, users }
+  + getUser(userid) : array         ' { ok, user }
+  + assignRole(userid, role) : array' { ok, message }
+  + getAllowedRoles() : array
+}
+
+class User <<Entity>> {
+  + unassigned() : array            ' rows[]
+  + getById(userid) : ?array        ' row|null
+  + updateRole(userid, role) : bool
+}
+
+' usage links (Boundary → Controller → Entity)
+AdminUsersPage --> UsersController : uses
+UsersController --> User : uses
+@enduml

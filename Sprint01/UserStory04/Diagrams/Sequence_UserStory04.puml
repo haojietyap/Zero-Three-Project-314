@@ -1,0 +1,45 @@
+@startuml
+actor "User Admin" as UA
+participant "AdminUsersPage\n<<boundary>>" as B
+participant "UsersController\n<<control>>" as C
+database "User\n<<entity>>" as E
+
+== Load List ==
+UA -> B: GET "/"
+B -> C: listUsers()
+activate C
+C -> E: all()
+activate E
+E --> C: return rows[]
+deactivate E
+C --> B: return { ok:true, users }
+deactivate C
+B -> UA: render table (includes Status + Action)
+
+== Toggle Status ==
+UA -> B: POST action=set_status (userid, status)
+B -> C: setStatus(userid, status)
+activate C
+
+C -> E: existsById(userid)
+activate E
+E --> C: return true/false
+deactivate E
+
+alt not found
+  C --> B: return { ok:false, message:"User not found" }
+  deactivate C
+  B -> UA: show error
+  return
+end
+
+C -> E: updateStatus(userid, status)
+activate E
+E --> C: return ok
+deactivate E
+
+C --> B: return { ok:true, message:"User #userid status set to STATUS" }
+deactivate C
+B -> UA: redirect to list with success
+
+@enduml

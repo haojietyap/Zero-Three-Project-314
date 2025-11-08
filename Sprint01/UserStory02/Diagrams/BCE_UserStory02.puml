@@ -1,0 +1,24 @@
+@startuml
+skinparam classAttributeIconSize 0
+hide circle
+hide attributes
+show methods
+
+package "UserStory02 — View All Users (Clean)" {
+  class AdminUsersPage <<boundary>> {
+    +handle(): void
+    +show(error?): void
+  }
+
+  class UsersController <<control>> {
+    +listUsers(): Result
+  }
+
+  class User <<entity>> {
+    +all(): UserRow[]
+  }
+
+  AdminUsersPage --> UsersController : show()
+  UsersController ..> User : all()
+}
+@enduml

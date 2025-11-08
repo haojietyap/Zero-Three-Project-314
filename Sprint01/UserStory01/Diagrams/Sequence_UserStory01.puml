@@ -1,0 +1,48 @@
+@startuml
+actor "User Admin" as UA
+participant "AdminCreateUserPage\n<<boundary>>" as B
+participant "UsersController\n<<control>>" as C
+database "User\n<<entity>>" as E
+
+== Load Form ==
+UA -> B: GET / (Create User form)
+B -> UA: showForm()
+
+== Submit ==
+UA -> B: POST (full_name, email, password, phone, address)
+B -> C: createUser(data)
+activate C
+
+C -> C: validate(data)
+alt invalid
+  C --> B: return { ok:false, message, prefill }
+  deactivate C
+  B -> UA: showForm(prefill, error)
+  return
+end
+
+C -> E: emailExists(email)
+activate E
+alt exists
+  E --> C: return true
+  deactivate E
+  C --> B: return { ok:false, message:"Email is already in use", prefill }
+  deactivate C
+  B -> UA: showForm(prefill, error)
+  return
+else not exists
+  E --> C: return false
+  deactivate E
+end
+
+C -> E: createAccount(data)
+activate E
+E --> C: return newUserId
+deactivate E
+
+C --> B: return { ok:true, message:"User #newUserId created" }
+deactivate C
+
+B -> UA: show success
+
+@enduml
