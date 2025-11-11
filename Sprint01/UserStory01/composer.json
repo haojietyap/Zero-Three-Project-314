@@ -1,0 +1,16 @@
+{
+  "name": "csit314/userstory01",
+  "description": "UserStory01 BCE implementation with PHPUnit tests",
+  "require": {},
+  "require-dev": {
+    "phpunit/phpunit": "^9.6"
+  },
+  "autoload": {
+    "classmap": [
+      "Boundary/",
+      "Controller/",
+      "Entity/",
+      "."
+    ]
+  }
+}
